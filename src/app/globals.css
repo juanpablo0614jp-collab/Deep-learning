@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f7fb;
+  --foreground: #0f172a;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --primary: #0f766e;
+  --primary-soft: rgba(15, 118, 110, 0.14);
+  --secondary: #0f172a;
+  --muted: #516176;
+  --border: rgba(148, 163, 184, 0.22);
+  --glow: rgba(34, 211, 238, 0.18);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-ibm-plex-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  background-image:
+    radial-gradient(circle at top left, rgba(45, 212, 191, 0.16), transparent 32%),
+    radial-gradient(circle at top right, rgba(56, 189, 248, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 251, 0.98));
+}
+
+::selection {
+  background: rgba(45, 212, 191, 0.22);
+  color: var(--foreground);
+}
+
+.panel-surface {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92),
+    rgba(255, 255, 255, 0.72)
+  );
+  border: 1px solid var(--border);
+  box-shadow:
+    0 24px 70px -42px rgba(15, 23, 42, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px);
+}
+
+.panel-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent);
+  pointer-events: none;
+}
+
+.soft-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(18px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.network-line {
+  stroke: rgba(100, 116, 139, 0.22);
+  stroke-width: 1.25;
+}
+
+.network-line-active {
+  stroke: rgba(20, 184, 166, 0.5);
+  stroke-dasharray: 8 10;
+  animation: signal-flow 1.6s linear infinite;
+}
+
+.network-node {
+  fill: rgba(255, 255, 255, 0.94);
+  stroke: rgba(15, 23, 42, 0.12);
+  stroke-width: 1.5;
+  transition:
+    fill 180ms ease,
+    stroke 180ms ease,
+    transform 180ms ease;
+}
+
+.network-node-active {
+  fill: rgba(20, 184, 166, 0.18);
+  stroke: rgba(13, 148, 136, 0.7);
+  animation: node-glow 1.3s ease-in-out infinite;
+}
+
+.signal-label {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.range-slider {
+  accent-color: var(--primary);
+}
+
+@keyframes signal-flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -54;
+  }
+}
+
+@keyframes node-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0 rgba(20, 184, 166, 0));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.32));
+    transform: scale(1.06);
+  }
+}
+
+@keyframes float-gentle {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-gentle {
+  animation: float-gentle 6s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  body {
+    background-image:
+      radial-gradient(circle at top, rgba(45, 212, 191, 0.16), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 251, 0.98));
+  }
+}
